@@ -1,31 +1,22 @@
 package com.example.spring5webapp.domain;
 
-import com.example.spring5webapp.repositories.BookRepository;
-
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
-import java.util.Set;
 
-@Entity
 public class Publisher {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
     private String addressLine1;
     private String city;
     private String state;
     private String zip;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Set<Book> books = new HashSet<>();
-
-    public Publisher(String name) {
-        this.name = name;
-    }
     public Publisher() {
     }
 
@@ -77,12 +68,19 @@ public class Publisher {
         this.zip = zip;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Publisher publisher = (Publisher) o;
+
+        return Objects.equals(id, publisher.id);
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
@@ -95,32 +93,5 @@ public class Publisher {
                 ", state='" + state + '\'' +
                 ", zip='" + zip + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Publisher publisher = (Publisher) o;
-
-        if (!Objects.equals(id, publisher.id)) return false;
-        if (!Objects.equals(name, publisher.name)) return false;
-        if (!Objects.equals(addressLine1, publisher.addressLine1))
-            return false;
-        if (!Objects.equals(city, publisher.city)) return false;
-        if (!Objects.equals(state, publisher.state)) return false;
-        return Objects.equals(zip, publisher.zip);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (addressLine1 != null ? addressLine1.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (zip != null ? zip.hashCode() : 0);
-        return result;
     }
 }
