@@ -14,12 +14,11 @@
         <th>Publisher</th>
     </tr>
     <tr th:each="book : ${books}">
-        <td th:text="${book.id}">123</td>
-        <td th:text="${book.title}"> Spring in Action</td>
-        <td th:text="${book.publisher.name}">Wrox</td>
+        <td th:text="${book.getId()}">123</td>
+        <td th:text="${book.getTitle()}"> Spring in Action</td>
+        <td th:text="${book.getPublisher().getName()}">Wrox</td>
     </tr>
 </table>
 
 </body>
 </html>
-Footer
